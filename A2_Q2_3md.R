@@ -72,3 +72,15 @@ showData(Countries_MobileMergeNA, placement='-20+200', font=getRcmdr('logFont'),
 Countries_MobileMergeNA$internet_growth2011 = ((Countries_MobileMergeNA$internet_users_2011 - Countries_MobileMergeNA$internet_users_2010)/Countries_MobileMergeNA$internet_users_2010)*100
 showData(Countries_MobileMergeNA, placement='-20+200', font=getRcmdr('logFont'), maxwidth=80, maxheight=30)
 
+# Plotting the mobile user growth and internet growth for the top 5 countries with the highest internet growth
+topInternetgrowth <- head(Countries_MobileMergeNA[order(Countries_MobileMergeNA$internet_growth2011, decreasing=TRUE),],5)
+topInternetgrowth <- topInternetgrowth[,c("Country","mobile_growth_2011","internet_growth2011")]
+rownames(topInternetgrowth) = topInternetgrowth[,c("Country")]
+topInternetgrowth
+topInternetgrowth <- topInternetgrowth[,c("mobile_growth_2011","internet_growth2011")]
+topInternetgrowth
+pdf("growthbarplot2.pdf")
+barplot(t(as.matrix(topInternetgrowth)),main = "Comparison chart on Internet growth and mobile growth 2010-2011",xlab="Country",ylab="Growth",beside=TRUE, col=rainbow(2))
+legend("topright", c("Mobile","Internet"), fill=rainbow(2))
+dev.off()
+
